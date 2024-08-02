@@ -1,0 +1,25 @@
+﻿@*display the variable status inside HTML with razor syntax*@
+
+@*example 1 - implicit razor expression: can be a variable...*@
+<!--<p>@status</p>-->
+
+@*...or a statement*@
+<!--<p>@status at @DateTime.Now</p>-->
+
+<!--Substitui código acima-->
+<p>@server.Name is in @server.City</p>
+<div data-name="@server.Name">
+    <!--contatenar strings com o explicit razor expression (com o implicit não conseguimos fazê-lo) -->
+    @server.Name is in @server.City that is @(server.IsOnline?"online":"offline")
+</div>
+
+
+@code {
+    @*declare variable status and initialize it with server is offline.*@
+    @* private string status = "Server is offline.";*@
+
+    @*substitui código acima - class Server que criámos - model. (Inicializar a variável server aqui)
+   Não esquecer de colocá-la no imports*@
+    private Server server = new Server { Name = "Server 1", City = "Toronto" };
+
+}

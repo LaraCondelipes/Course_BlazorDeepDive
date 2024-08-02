@@ -1,0 +1,61 @@
+﻿<!--Isto é um routable component (os que têm page directive) :     -->
+@page "/servers"
+
+
+<h3>Servers</h3>
+
+<!--Usar o non-routable component:  (não esquecer de colocar o "using ServerManagement.Components.Controls" no imports.razor")-->
+<!--<ServerComponent></ServerComponent>-->
+
+<!--In the order to implement bootstrap for our buttons collapse: we create div with class container-fluid -->
+<div class="container-fluid text-center">
+    <div class="row w-50">
+        <!--We put the razor syntax to output the list of cities as button on the top of the list - it's a requirement for this assignment.
+            Using implicit reserve expression on city
+        -->
+        @foreach (var city in cities)
+        {
+            <div class="col">
+                <div class="card" style="width: 7rem;">
+                    <img src="@($"/images/{city}.png")" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary">@city</button>
+                    </div>
+                </div>
+               
+
+            </div>
+        }
+       
+    </div>
+
+</div>
+
+
+  
+
+
+<!--use razor syntax to loop through this and generate a list -->
+<ul>
+    
+    @foreach (var server in servers)
+    {
+      <!--where, we put  whatever the HTML elements we need to repeat(inside the foreach)-->  
+      <li>
+          <!--now we use explicit expressions to see the server's name, server city and the server status-->
+            @server.Name in @server.City is <span style="color : @((server.IsOnline ? "green": "red")) " >
+                @(server.IsOnline ? "online" : "offline")
+                </span>
+      </li>
+    }
+
+</ul>
+
+
+@code {
+    //create variable to store the list of services and initialize it that wikth our static repository
+    private List<Server> servers = ServersRepository.GetServersByCity("Toronto");
+    //create variable to store the list of cities and initialize it that wikth our static repository
+    private List<String> cities = CitiesRepositories.GetCities();
+
+}
